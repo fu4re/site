@@ -19,11 +19,12 @@ class Article
     /** @var string */
     private $createdAt;
 
-    public function __construct(string $title, string $text, User $author)
+    /**
+     * @return int Вернуть ID
+     */
+    public function getId(): int
     {
-        $this->title = $title;
-        $this->text = $text;
-        $this->author = $author;
+        return $this->id;
     }
 
     /**
@@ -48,5 +49,21 @@ class Article
     public function getAuthor(): User
     {
         return $this->author;
+    }
+
+    /**
+     * Попытка задать закрытые свойства
+     * @param $name mixed Имя свойства
+     * @param $value mixed Значение свойства
+     */
+    public function __set($name, $value)
+    {
+        $camelCaseName = $this->underscoreToCamelCase($name);
+        $this->$camelCaseName = $value;
+    }
+
+    private function underscoreToCamelCase(string $source): string
+    {
+        return lcfirst(str_replace('_', '', ucwords($source, '_')));
     }
 }

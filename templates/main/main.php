@@ -8,8 +8,8 @@
     <tr>
         <td>
             <?php foreach ($articles as $article): ?>
-                <h2><?= $article['name'] ?></h2>
-                <p><?= $article['text'] ?></p>
+                <h2><a href="/articles/<?= $article->getId() ?>"><?= $article->getTitle() ?></a></h2>
+                <p><?= $article->getText() ?></p>
                 <hr>
             <?php endforeach; ?>
         </td>

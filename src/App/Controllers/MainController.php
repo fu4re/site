@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\Articles\Article;
 use App\Services\Database;
 use App\View\View;
 
@@ -32,7 +33,7 @@ class MainController
      */
     public function main()
     {
-        $articles = $this->db->query('SELECT * FROM `articles`');
+        $articles = $this->db->query('SELECT * FROM `articles`', [], Article::class);
         $this->view->renderHtml('main/main.php', ['articles' => $articles]);
     }
 }
