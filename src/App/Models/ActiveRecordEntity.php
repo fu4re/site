@@ -44,7 +44,7 @@ abstract class ActiveRecordEntity
     }
 
     /**
-     * Выборка из таблицы по id
+     * Выбрать 1 запись из таблицы по id
      * @param int $id
      * @return static|null
      */

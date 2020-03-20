@@ -15,8 +15,6 @@ class MainController
 {
     /** @var View */
     private $view;
-    /** @var Database*/
-    private $db;
 
     /**
      * Запуск контроллера и инициализация вида
