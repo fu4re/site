@@ -3,12 +3,11 @@
 
 namespace App\Models\Articles;
 
+use App\Models\ActiveRecordEntity;
 use App\Services\Database;
 
-class Article
+class Article extends ActiveRecordEntity
 {
-    /** @var int */
-    private $id;
     /** @var string  */
     private $title;
     /** @var string  */
@@ -17,14 +16,6 @@ class Article
     private $authorId;
     /** @var string */
     private $createdAt;
-
-    /**
-     * @return int Вернуть ID
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
 
     /**
      * @return string Вернуть заголовок
@@ -70,7 +61,15 @@ class Article
     public static function FindAll(array $param = []) : array
     {
         $db = new Database();
-        return $db->query('SELECT * FROM `articles`;', $param, Article::class);
+        return $db->query('SELECT * FROM `'. static::getTableName() .'`;', $param, static::class);
+    }
+
+    /**
+     * @return string Возвращает название таблицы
+     */
+    protected static function getTableName(): string
+    {
+        return 'articles';
     }
 
     private function underscoreToCamelCase(string $source): string
