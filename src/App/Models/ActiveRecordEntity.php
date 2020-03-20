@@ -44,6 +44,22 @@ abstract class ActiveRecordEntity
     }
 
     /**
+     * Выборка из таблицы по id
+     * @param int $id
+     * @return static|null
+     */
+    public static function getById(int $id): ?self
+    {
+        $db = new Database();
+        $entities = $db->query(
+            'SELECT * FROM `' . static::getTableName() . '` WHERE id=:id;',
+            [':id' => $id],
+            static::class
+        );
+        return $entities ? $entities[0] : null;
+    }
+
+    /**
      * @return string Название таблицы которой принадлежит запись
      */
     abstract protected static function getTableName(): string;
