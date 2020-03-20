@@ -1,16 +1,18 @@
 <?php
 
+
 namespace App\Controllers;
+
 
 use App\Services\Database;
 use App\View\View;
 
 /**
- * Главный контроллер
- * Class MainController
+ * Контроллер страницы статей
+ * Class ArticlesController
  * @package App\Controllers
  */
-class MainController
+class ArticlesController
 {
     /** @var View */
     private $view;
@@ -19,7 +21,7 @@ class MainController
 
     /**
      * Запуск контроллера и инициализация вида
-     * MainController constructor
+     * ArticlesController constructor
      */
     public function __construct()
     {
@@ -28,11 +30,15 @@ class MainController
     }
 
     /**
-     * Главный метод
+     * Показать одну статью
+     * @param int $articleId Id статьи
      */
-    public function main()
+    public function view(int $articleId)
     {
-        $articles = $this->db->query('SELECT * FROM `articles`');
-        $this->view->renderHtml('main/main.php', ['articles' => $articles]);
+        $result = $this->db->query(
+            'SELECT * FROM `articles` WHERE id = :id;',
+            [':id' => $articleId]
+        );
+        var_dump($result);
     }
 }
