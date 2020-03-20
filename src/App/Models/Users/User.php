@@ -14,7 +14,7 @@ class User
     }
 
     /**
-     * @return string
+     * @return string Вернуть имя
      */
     public function getName(): string
     {

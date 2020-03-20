@@ -12,7 +12,6 @@ class Article
     private $text;
     private $author;
 
-
     public function __construct(string $title, string $text, User $author)
     {
         $this->title = $title;
@@ -21,7 +20,7 @@ class Article
     }
 
     /**
-     * @return string
+     * @return string Вернуть заголовок
      */
     public function getTitle(): string
     {
@@ -29,7 +28,7 @@ class Article
     }
 
     /**
-     * @return string
+     * @return string Вернуть содержимое
      */
     public function getText(): string
     {
@@ -37,7 +36,7 @@ class Article
     }
 
     /**
-     * @return User
+     * @return User Вернуть автора
      */
     public function getAuthor(): User
     {
