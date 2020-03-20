@@ -39,6 +39,13 @@ class ArticlesController
             'SELECT * FROM `articles` WHERE id = :id;',
             [':id' => $articleId]
         );
-        var_dump($result);
+
+        if ($result === []) // 404
+        {
+            $this->view->renderHtml('errors/404.php', [], 404);
+            return;
+        }
+
+        $this->view->renderHtml('articles/view.php', ['article' => $result[0]]);
     }
 }
