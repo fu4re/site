@@ -21,9 +21,11 @@ class View
     /**
      * @param string $templateName Имя шаблона
      * @param array $vars Массив данных
+     * @param int $code Код состояния
      */
-    public function renderHtml(string $templateName, array $vars = [])
+    public function renderHtml(string $templateName, array $vars = [], int $code = 200)
     {
+        http_response_code($code);
         extract($vars);
 
         ob_start();
