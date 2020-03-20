@@ -3,8 +3,7 @@
 
 namespace App\Models\Articles;
 
-
-use App\Models\Users\User;
+use App\Services\Database;
 
 class Article
 {
@@ -60,6 +59,18 @@ class Article
     {
         $camelCaseName = $this->underscoreToCamelCase($name);
         $this->$camelCaseName = $value;
+    }
+
+    /**
+     * Вернуть все записи статей
+     * @var $param array Массив параметров
+     *
+     * @return array Массив статей
+     */
+    public static function FindAll(array $param = []) : array
+    {
+        $db = new Database();
+        return $db->query('SELECT * FROM `articles`;', $param, Article::class);
     }
 
     private function underscoreToCamelCase(string $source): string
