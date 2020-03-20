@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Мой блог</title>
-    <link rel="stylesheet" href="/style.css">
-</head>
-<body>
+<?php include __DIR__ . '\\..\\header.php'; ?>
 <table class="layout">
     <tr>
         <td colspan="2" class="header">
@@ -33,6 +26,4 @@
         <td class="footer" colspan="2">Все права защищены (c) Мой блог</td>
     </tr>
 </table>
-
-</body>
-</html>
+<?php include __DIR__ . '\\..\\footer.php'; ?>
