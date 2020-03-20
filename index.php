@@ -10,6 +10,7 @@ spl_autoload_register(function (string $className){
 $route = $_GET['route'] ?? '';
 $routes = require_once __DIR__.'\\src\\routes.php';
 
+//Проверка соответсвию назначенных маршрутов
 $isRouteFound = false;
 foreach ($routes as $pattern => $controllerAndAction) {
     preg_match($pattern, $route, $matches);
@@ -19,6 +20,7 @@ foreach ($routes as $pattern => $controllerAndAction) {
     }
 }
 
+// Если не найден маршрут
 if (!$isRouteFound) {
     echo 'Страница не найдена!';
     return;
