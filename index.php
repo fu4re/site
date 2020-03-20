@@ -7,5 +7,27 @@ spl_autoload_register(function (string $className){
     require_once __DIR__.'\\src\\'.$className.'.php';
 });
 
-$controller = new \App\Controllers\MainController();
-$controller->main();#
+$route = $_GET['route'] ?? '';
+$routes = require_once __DIR__.'\\src\\routes.php';
+
+$isRouteFound = false;
+foreach ($routes as $pattern => $controllerAndAction) {
+    preg_match($pattern, $route, $matches);
+    if (!empty($matches)) {
+        $isRouteFound = true;
+        break;
+    }
+}
+
+if (!$isRouteFound) {
+    echo 'Страница не найдена!';
+    return;
+}
+
+unset($matches[0]);
+
+$controllerName = $controllerAndAction[0];
+$actionName = $controllerAndAction[1];
+
+$controller = new $controllerName();
+$controller->$actionName(...$matches);
