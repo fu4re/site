@@ -3,21 +3,52 @@
 
 namespace App\Models\Users;
 
+use App\Models\ActiveRecordEntity;
 
-class User
+class User extends ActiveRecordEntity
 {
-    private $name;
+    /** @var string */
+    protected $nickname;
 
-    public function __construct(string $name)
+    /** @var string */
+    protected $email;
+
+    /** @var int */
+    protected $isConfirmed;
+
+    /** @var string */
+    protected $role;
+
+    /** @var string */
+    protected $passwordHash;
+
+    /** @var string */
+    protected $authToken;
+
+    /** @var string */
+    protected $createdAt;
+
+    /**
+     * @return string Возвращает почту
+     */
+    public function getEmail(): string
     {
-        $this->name = $name;
+        return $this->email;
     }
 
     /**
-     * @return string Вернуть имя
+     * @return string Возвращает никнейм
      */
-    public function getName(): string
+    public function getNickname(): string
     {
-        return $this->name;
+        return $this->nickname;
+    }
+
+    /**
+     * @return string Возвращает название таблицы
+     */
+    protected static function getTableName(): string
+    {
+        return 'users';
     }
 }
