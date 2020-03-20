@@ -4,6 +4,7 @@
 namespace App\Controllers;
 
 use App\Models\Articles\Article;
+use App\Models\Users\User;
 use App\View\View;
 
 /**
@@ -41,6 +42,11 @@ class ArticlesController
             return;
         }
 
-        $this->view->renderHtml('articles/view.php', ['article' => $article]);
+        $articleAuthor = User::getById($article->getAuthorId());
+
+        $this->view->renderHtml('articles/view.php', [
+            'article' => $article,
+            'author' => $articleAuthor
+        ]);
     }
 }

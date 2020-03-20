@@ -4,7 +4,7 @@
 namespace App\Models\Articles;
 
 use App\Models\ActiveRecordEntity;
-use App\Services\Database;
+use App\Models\Users\User;
 
 class Article extends ActiveRecordEntity
 {
@@ -38,7 +38,7 @@ class Article extends ActiveRecordEntity
      */
     public function getAuthor(): User
     {
-        return $this->author;
+        return User::getById($this->authorId);
     }
 
     /**
@@ -62,6 +62,14 @@ class Article extends ActiveRecordEntity
     {
         $db = new Database();
         return $db->query('SELECT * FROM `'. static::getTableName() .'`;', $param, static::class);
+    }
+
+    /**
+     * @return int Возвращаем id автора
+     */
+    public function getAuthorId(): int
+    {
+        return (int) $this->authorId;
     }
 
     /**
