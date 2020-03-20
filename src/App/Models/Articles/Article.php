@@ -8,9 +8,16 @@ use App\Models\Users\User;
 
 class Article
 {
+    /** @var int */
+    private $id;
+    /** @var string  */
     private $title;
+    /** @var string  */
     private $text;
-    private $author;
+    /** @var string */
+    private $authorId;
+    /** @var string */
+    private $createdAt;
 
     public function __construct(string $title, string $text, User $author)
     {

@@ -28,10 +28,11 @@ class Database
      * Выполнение запроса к БД
      * @param string $sql SQL-запрос
      * @param array $params Параметры
+     * @param string $className Класс для извлечения ORM
      *
      * @return array|null Массив данных или null
      */
-    public function query(string $sql, $params = []) : ?array
+    public function query(string $sql, $params = [], string  $className = 'stdClass') : ?array
     {
         $sth = $this->pdo->prepare($sql);
         $result = $sth->execute($params);
@@ -41,6 +42,6 @@ class Database
             return null;
         }
 
-        return  $sth->fetchAll();
+        return  $sth->fetchAll(\PDO::FETCH_CLASS, $className);
     }
 }
