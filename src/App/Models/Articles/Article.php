@@ -9,13 +9,13 @@ use App\Models\Users\User;
 class Article extends ActiveRecordEntity
 {
     /** @var string  */
-    private $title;
+    protected $title;
     /** @var string  */
-    private $text;
+    protected $text;
     /** @var string */
-    private $authorId;
+    protected $authorId;
     /** @var string */
-    private $createdAt;
+    protected $createdAt;
 
     /**
      * @return string Вернуть заголовок
@@ -39,6 +39,16 @@ class Article extends ActiveRecordEntity
     public function getAuthor(): User
     {
         return User::getById($this->authorId);
+    }
+
+    public function setTitle(string $new_title)
+    {
+        $this->title = $new_title;
+    }
+
+    public function setText(string $new_text)
+    {
+        $this->text = $new_text;
     }
 
     /**

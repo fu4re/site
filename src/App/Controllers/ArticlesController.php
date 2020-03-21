@@ -47,4 +47,23 @@ class ArticlesController
             'author' => $articleAuthor
         ]);
     }
+
+    /**
+     * Отредактировать статью
+     * @param int $articleId Id статьи
+     */
+    public function edit(int $articleId): void
+    {
+        $article = Article::getById($articleId);
+
+        if ($article === null) {
+            $this->view->renderHtml('errors/404.php', [], 404);
+            return;
+        }
+
+        $article->setTitle('Новое название статьи');
+        $article->setText('Новый текст статьи');
+
+        $article->save();
+    }
 }
