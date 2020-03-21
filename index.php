@@ -25,10 +25,16 @@ if (!$isRouteFound) {
    throw new \App\Exceptions\NotFoundException();
 }
 
+if (strtolower($_SERVER ['REQUEST_METHOD']) === $controllerAndAction[0])
+{//TODO
+    echo 'Wrong method';
+    return;
+}
+
 unset($matches[0]);
 
-$controllerName = $controllerAndAction[0];
-$actionName = $controllerAndAction[1];
+$controllerName = $controllerAndAction[1];
+$actionName = $controllerAndAction[2];
 
 $controller = new $controllerName();
 $controller->$actionName(...$matches);
