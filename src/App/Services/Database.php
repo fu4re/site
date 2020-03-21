@@ -44,6 +44,15 @@ class Database
     }
 
     /**
+     * Вернуть id последеней обработанной записи
+     * @return int
+     */
+    public function getLastInsertId(): int
+    {
+        return (int) $this->pdo->lastInsertId();
+    }
+
+    /**
      * Выполнение запроса к БД
      * @param string $sql SQL-запрос
      * @param array $params Параметры

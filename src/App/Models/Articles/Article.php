@@ -41,14 +41,19 @@ class Article extends ActiveRecordEntity
         return User::getById($this->authorId);
     }
 
-    public function setTitle(string $new_title)
+    public function setTitle(string $new_title) : void
     {
         $this->title = $new_title;
     }
 
-    public function setText(string $new_text)
+    public function setText(string $new_text) : void
     {
         $this->text = $new_text;
+    }
+
+    public function setAuthor(User $author) : void
+    {
+        $this->authorId = $author->getId();
     }
 
     /**
