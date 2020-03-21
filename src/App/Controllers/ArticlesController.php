@@ -3,6 +3,7 @@
 
 namespace App\Controllers;
 
+use App\Exceptions\NotFoundException;
 use App\Models\Articles\Article;
 use App\Models\Users\User;
 use App\View\View;
@@ -57,8 +58,7 @@ class ArticlesController
         $article = Article::getById($articleId);
 
         if ($article === null) {
-            $this->view->renderHtml('errors/404.php', [], 404);
-            return;
+            throw new NotFoundException();
         }
 
         $article->setTitle('Новое название статьи');

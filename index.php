@@ -22,8 +22,7 @@ foreach ($routes as $pattern => $controllerAndAction) {
 
 // Если не найден маршрут
 if (!$isRouteFound) {
-    echo 'Страница не найдена!';
-    return;
+   throw new \App\Exceptions\NotFoundException();
 }
 
 unset($matches[0]);
@@ -34,6 +33,9 @@ $actionName = $controllerAndAction[1];
 $controller = new $controllerName();
 $controller->$actionName(...$matches);
 } catch (\App\Exceptions\DBException $e) {
-    $view = new \App\View\View(__DIR__ . '/../templates/errors');
+    $view = new \App\View\View(__DIR__ . '\\templates\\errors');
     $view->renderHtml('500.php', ['error' => $e->getMessage()], 500);
+} catch (\App\Exceptions\NotFoundException $e) {
+    $view = new \App\View\View(__DIR__ . '\\templates\\errors');
+    $view->renderHtml('404.php', ['error' => $e->getMessage()], 404);
 }
