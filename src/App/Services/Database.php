@@ -8,12 +8,31 @@ class Database
 {
     /** @var \PDO */
     private $pdo;
+    /** @var null|Database Соединение с базой */
+    private static $instance;
+    /** @var int Количество соединений с базой */
+    private static $instanceCount = 0;
+
+
+    /**
+     * @return Database|null
+     */
+    public static function getInstance(): ?Database
+    {
+        if(self::$instance === null)
+        {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
 
     /**
      *  Установления соединения с БД
      */
-    public function  __construct()
+    private function  __construct()
     {
+        self::$instanceCount++;
+
         $dbOptions = (require __DIR__.'/../../settings.php')['db'];
 
         $this->pdo = new \PDO(
