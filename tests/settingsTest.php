@@ -10,13 +10,13 @@ class SettingsTest extends TestCase
         $this->pathToSettings =  __DIR__.'/../src/settings.php';
     }
 
-    public function testIfSettingsExist(): void
+    public function testIfSettingsFileExist(): void
     {
         $this->assertFileExists($this->pathToSettings);
     }
 
     /**
-     * @depends testIfSettingsExist
+     * @depends testIfSettingsFileExist
      */
     public function testIfDBConfigurationCorrect (): void
     {
