@@ -20,6 +20,8 @@ foreach ($routes as $pattern => $controllerAndAction) {
     }
 }
 
+var_dump($controllerAndAction);
+var_dump($_SERVER);
 // Если не найден маршрут
 if (!$isRouteFound) {
    throw new \App\Exceptions\NotFoundException();
@@ -30,7 +32,6 @@ if (strtolower($_SERVER ['REQUEST_METHOD']) === $controllerAndAction[0])
     echo 'Wrong method';
     return;
 }
-
 unset($matches[0]);
 
 $controllerName = $controllerAndAction[1];

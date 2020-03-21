@@ -2,3 +2,5 @@
 /vendor/
 *.phpunit.result.cache
 /src/settings.php
+/tmp/
+/none

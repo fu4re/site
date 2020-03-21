@@ -3,7 +3,7 @@ use PHPUnit\Framework\TestCase;
 
 use App\Controllers;
 
-class routesTest extends TestCase
+class RoutesTest extends TestCase
 {
     protected $pathToRoutes;
 
@@ -12,24 +12,29 @@ class routesTest extends TestCase
         $this->pathToRoutes =  __DIR__.'/../src/routes.php';
     }
 
-    public function testIfRoutesFileExist(): void
+    /**
+     * @coversNothing
+     */
+    public function testRoutesFileExist(): void
     {
         $this->assertFileExists($this->pathToRoutes);
     }
 
     /**
-     * @depends testIfRoutesFileExist
+     * @coversNothing
+     * @depends testRoutesFileExist
      */
-    public function testIfRoutesIsArray (): void
+    public function testRoutesReturnsArray (): void
     {
         $routes = $this->getRoutes();
         $this->assertIsArray($routes, 'Не массив');
     }
 
     /**
-     * @depends testIfRoutesFileExist
+     * @coversNothing
+     * @depends testRoutesFileExist
      */
-    public function testIfRegExIsValid (): void
+    public function testRegexIsValid (): void
     {
         $option = '~.*~';
         $keys = array_keys($this->getRoutes());
@@ -40,9 +45,10 @@ class routesTest extends TestCase
     }
 
     /**
-     * @depends testIfRoutesFileExist
+     * @coversNothing
+     * @depends testRoutesFileExist
      */
-    public function testIfRouteHaveAllArguments (): void
+    public function testRouteHaveAllArguments (): void
     {
         $routeOptions = array_values($this->getRoutes());
         foreach ($routeOptions as $options)
@@ -52,9 +58,10 @@ class routesTest extends TestCase
     }
 
     /**
-     * @depends testIfRouteHaveAllArguments
+     * @coversNothing
+     * @depends testRouteHaveAllArguments
      */
-    public function testIfRequestMethodIsValid (): void
+    public function testRequestMethodIsValid (): void
     {
         $routeOptions = $this->getRoutes();
         foreach ($routeOptions as $regex => $options)
@@ -64,9 +71,10 @@ class routesTest extends TestCase
     }
 
     /**
-     * @depends testIfRouteHaveAllArguments
+     * @coversNothing
+     * @depends testRouteHaveAllArguments
      */
-    public function testIfControllerClassExist (): void
+    public function testControllerClassExist (): void
     {
         $routeOptions = array_values($this->getRoutes());
         foreach ($routeOptions as $options)
@@ -76,9 +84,10 @@ class routesTest extends TestCase
     }
 
     /**
-     * @depends testIfControllerClassExist
+     * @coversNothing
+     * @depends testControllerClassExist
      */
-    public function testIfControllerClassHasMethod (): void
+    public function testControllerClassHasMethod (): void
     {
         $routeOptions = array_values($this->getRoutes());
         foreach ($routeOptions as $options)
@@ -89,6 +98,7 @@ class routesTest extends TestCase
     }
 
     /**
+     * @coversNothing
      * @coversNothing
      */
     public function getRoutes()
