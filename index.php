@@ -20,14 +20,12 @@ foreach ($routes as $pattern => $controllerAndAction) {
     }
 }
 
-var_dump($controllerAndAction);
-var_dump($_SERVER);
 // Если не найден маршрут
 if (!$isRouteFound) {
    throw new \App\Exceptions\NotFoundException();
 }
 
-if (strtolower($_SERVER ['REQUEST_METHOD']) === $controllerAndAction[0])
+if (strtolower($_SERVER ['REQUEST_METHOD']) !== $controllerAndAction[0])
 {//TODO
     echo 'Wrong method';
     return;
