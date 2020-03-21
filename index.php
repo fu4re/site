@@ -1,8 +1,8 @@
 <?php
-
+try {
 /**
- * Автозагрузка классов из директории
- */
+* Автозагрузка классов из директории
+*/
 spl_autoload_register(function (string $className){
     require_once __DIR__.'\\src\\'.$className.'.php';
 });
@@ -33,3 +33,7 @@ $actionName = $controllerAndAction[1];
 
 $controller = new $controllerName();
 $controller->$actionName(...$matches);
+} catch (\App\Exceptions\DBException $e) {
+    $view = new \App\View\View(__DIR__ . '/../templates/errors');
+    $view->renderHtml('500.php', ['error' => $e->getMessage()], 500);
+}

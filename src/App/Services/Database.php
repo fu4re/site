@@ -4,6 +4,8 @@
 namespace App\Services;
 
 
+use App\Exceptions\DBException;
+
 class Database
 {
     /** @var \PDO */
@@ -35,12 +37,16 @@ class Database
 
         $dbOptions = (require __DIR__.'/../../settings.php')['db'];
 
-        $this->pdo = new \PDO(
-            'mysql:host='.$dbOptions['host'].';dbname='.$dbOptions['dbname'],
-            $dbOptions['user'],
-            $dbOptions['password']
-        );
-        $this->pdo->exec('SET NAMES UTF8');
+        try{
+            $this->pdo = new \PDO(
+                'mysql:host='.$dbOptions['host'].';dbname='.$dbOptions['dbname'],
+                $dbOptions['user'],
+                $dbOptions['password']
+            );
+            $this->pdo->exec('SET NAMES UTF8');
+        }catch (\PDOException $e) {
+            throw new DBException('Ошибка при подключении к базе данных: '.$e->getMessage());
+        }
     }
 
     /**
