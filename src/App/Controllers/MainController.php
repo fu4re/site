@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Models\Articles\Article;
-use App\Services\Database;
 use App\View\View;
 
 /**

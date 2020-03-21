@@ -53,18 +53,6 @@ class Article extends ActiveRecordEntity
     }
 
     /**
-     * Вернуть все записи статей
-     * @var $param array Массив параметров
-     *
-     * @return array Массив статей
-     */
-    public static function FindAll(array $param = []) : array
-    {
-        $db = new Database();
-        return $db->query('SELECT * FROM `'. static::getTableName() .'`;', $param, static::class);
-    }
-
-    /**
      * @return int Возвращаем id автора
      */
     public function getAuthorId(): int
