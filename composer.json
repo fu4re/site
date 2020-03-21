@@ -1,4 +1,9 @@
 {
+    "name": "gcfactory/test_site",
+    "description": "no",
+    "type": "project",
+    "license": "proprietary",
+    "require": {}
     "require-dev": {
         "phpunit/phpunit": "^8.5"
     },
