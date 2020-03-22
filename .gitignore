@@ -4,3 +4,4 @@
 /src/settings.php
 /tmp/
 /none
+*.lock
