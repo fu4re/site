@@ -3,6 +3,7 @@
 
 namespace App\Models;
 
+use App\Exceptions\DBException;
 use App\Services\Database;
 
 /**
@@ -111,6 +112,7 @@ abstract class ActiveRecordEntity
 
     /**
      * @return static[] Вернуть все записи ищ таблицы
+     * @throws DBException
      */
     public static function findAll(): array
     {
@@ -120,8 +122,11 @@ abstract class ActiveRecordEntity
 
     /**
      * Выбрать 1 запись из таблицы по id
+     *
      * @param int $id
+     *
      * @return static|null
+     * @throws DBException
      */
     public static function getById(int $id): ?self
     {

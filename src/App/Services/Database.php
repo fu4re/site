@@ -14,16 +14,43 @@ class Database
     private static $instance;
     /** @var int Количество соединений с базой */
     private static $instanceCount = 0;
+    /** @var array Массив настроек */
+    private static $dbOptions = [];
 
+    public static function setOptions(array $options) : void
+    {
+        if( array_key_exists('host', $options) &&
+            array_key_exists('dbname', $options) &&
+            array_key_exists('user', $options) &&
+            array_key_exists('password', $options)
+        ) {
+            if (is_string($options['host']) &&
+                is_string($options['host']) &&
+                is_string($options['host']) &&
+                is_string($options['host']) )
+            {
+                self::$dbOptions = $options;
+            } else {
+                throw new DBException('Ошибка. Параметры не строки');
+            }
+        }else {
+            throw new DBException('Ошибка. Не хватает параметров');
+        }
+    }
 
     /**
-     * @return Database|null
+     * @return self|null
+     * @throws DBException
      */
     public static function getInstance(): ?Database
     {
         if(self::$instance === null)
         {
-            self::$instance = new self();
+            if (count(self::$dbOptions) === 0 ) {
+                throw new DBException('Ошибка. Не заданы параметры подключения');
+            }else {
+                self::$instance = new self();
+            }
         }
         return self::$instance;
     }
