@@ -13,16 +13,16 @@ class SettingsTest extends TestCase
     /**
      * @coversNothing
      */
-    public function testSettingsFileExist(): void
+    public function testSettingsFileExists(): void
     {
         $this->assertFileExists($this->pathToSettings);
     }
 
     /**
      * @coversNothing
-     * @depends testSettingsFileExist
+     * @depends testSettingsFileExists
      */
-    public function testDatabaseConfigurationCorrect (): void
+    public function testDatabaseConfigurationIsCorrect (): void
     {
         $settings = $this->getSettings();
         $this->assertIsArray($settings);

@@ -25,9 +25,9 @@ class Database
             array_key_exists('password', $options)
         ) {
             if (is_string($options['host']) &&
-                is_string($options['host']) &&
-                is_string($options['host']) &&
-                is_string($options['host']) )
+                is_string($options['dbname']) &&
+                is_string($options['user']) &&
+                is_string($options['password']) )
             {
                 self::$dbOptions = $options;
             } else {

@@ -15,14 +15,14 @@ class RoutesTest extends TestCase
     /**
      * @coversNothing
      */
-    public function testRoutesFileExist(): void
+    public function testRoutesFileExists(): void
     {
         $this->assertFileExists($this->pathToRoutes);
     }
 
     /**
      * @coversNothing
-     * @depends testRoutesFileExist
+     * @depends testRoutesFileExists
      */
     public function testRoutesReturnsArray (): void
     {
@@ -32,7 +32,7 @@ class RoutesTest extends TestCase
 
     /**
      * @coversNothing
-     * @depends testRoutesFileExist
+     * @depends testRoutesFileExists
      */
     public function testRegexIsValid (): void
     {
@@ -46,7 +46,7 @@ class RoutesTest extends TestCase
 
     /**
      * @coversNothing
-     * @depends testRoutesFileExist
+     * @depends testRoutesFileExists
      */
     public function testRouteHaveAllArguments (): void
     {
@@ -74,7 +74,7 @@ class RoutesTest extends TestCase
      * @coversNothing
      * @depends testRouteHaveAllArguments
      */
-    public function testControllerClassExist (): void
+    public function testControllerClassExists (): void
     {
         $routeOptions = array_values($this->getRoutes());
         foreach ($routeOptions as $options)
@@ -85,7 +85,7 @@ class RoutesTest extends TestCase
 
     /**
      * @coversNothing
-     * @depends testControllerClassExist
+     * @depends testControllerClassExists
      */
     public function testControllerClassHasMethod (): void
     {
