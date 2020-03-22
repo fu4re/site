@@ -5,3 +5,4 @@
 /tmp/
 /none
 *.lock
+composer.lock
