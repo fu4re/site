@@ -31,7 +31,7 @@ abstract class ActiveRecordEntity
     }
 
     /**
-     * Обновление записи
+     * Сохранение записи
      */
     public function save(): void
     {
@@ -46,10 +46,11 @@ abstract class ActiveRecordEntity
 
     private function update(array $mappedProperties): void
     {
+        $filteredProperties = array_filter($mappedProperties);
         $columns2params = [];
         $params2values = [];
         $index = 1;
-        foreach ($mappedProperties as $column => $value) {
+        foreach ($filteredProperties as $column => $value) {
             $param = ':param' . $index; // :param1
             $columns2params[] = $column . ' = ' . $param; // column1 = :param1
             $params2values[':param' . $index] = $value; // [:param1 => value1]
@@ -136,6 +137,28 @@ abstract class ActiveRecordEntity
             static::class
         );
         return $entities ? $entities[0] : null;
+    }
+
+    /**
+     * Найти по значению колонки в таблице
+     * @param string $columnName Параметр поиска
+     * @param mixed $value Значение
+     *
+     * @return static|null
+     * @throws DBException
+     */
+    public static function findOneByColumn(string $columnName, $value): ?self
+    {
+        $db = Database::getInstance();
+        $result = $db->query(
+            'SELECT * FROM `' . static::getTableName() . '` WHERE `' . $columnName . '` = :value LIMIT 1;',
+            [':value' => $value],
+            static::class
+        );
+        if ($result === []) {
+            return null;
+        }
+        return $result[0];
     }
 
     /**

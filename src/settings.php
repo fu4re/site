@@ -2,8 +2,12 @@
 return [
     'db' => [
         'host' => 'localhost',
-        'dbname' => 'test_site',
-        'user' => 'root',
-        'password' => '',
+        'dbname' => 'gcfactory',
+        'user' => 'default',
+        'password' => 'root',
+    ],
+    'authorization' => [
+        'expires_in' => 259200, // 3 days in seconds
+        'strict_to_ip' => true,
     ]
 ];
