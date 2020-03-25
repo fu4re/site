@@ -7,6 +7,7 @@ namespace App\View;
 class View
 {
     private $templatesPath;
+    private $extraVars;
 
     /**
      * View constructor.
@@ -19,6 +20,17 @@ class View
     }
 
     /**
+     * Функция для задания допольнительных переменных в Видах
+     * @param string $name Имя
+     * @param mixed $value Значение
+     */
+    public function setVar(string $name, $value): void
+    {
+        $this->extraVars[$name] = $value;
+    }
+
+    /**
+     * Отображение HTML
      * @param string $templateName Имя шаблона
      * @param array $vars Массив данных
      * @param int $code Код состояния

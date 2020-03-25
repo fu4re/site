@@ -14,6 +14,10 @@ class Database
     /** @var array Массив настроек */
     private static $dbOptions = [];
 
+    /**
+     * @param array $options Массив настроек
+     * @throws DBException
+     */
     public static function setOptions(array $options) : void
     {
         if( array_key_exists('host', $options) &&
@@ -36,6 +40,7 @@ class Database
     }
 
     /**
+     * Вернуть экземпляр самого себя
      * @return self|null
      * @throws DBException
      */
