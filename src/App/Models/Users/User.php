@@ -40,9 +40,12 @@ class User extends ActiveRecordEntity
 
     /**
      * Регистрация пользователя
+     *
      * @param array $userData данные пользователя
      *
+     * @return User Сущность Пользователь
      * @throws InvalidArgumentException
+     * @throws \App\Exceptions\DBException
      */
     public static function signUp(array $userData)
     {
@@ -110,6 +113,53 @@ class User extends ActiveRecordEntity
         $user->save();
 
         return $user;
+    }
+
+    /**
+     * Активация пользователя
+     */
+    public function activate(): void
+    {
+        $this->isConfirmed = true;
+        $this->save();
+    }
+
+    /**
+     * Авторизация пользователя
+     * @param array $loginData
+     *
+     * @return User
+     * @throws InvalidArgumentException
+     * @throws \App\Exceptions\DBException
+     */
+    public static function login(array $loginData): User
+    {
+        if (empty($loginData['email'])) {
+            throw new InvalidArgumentException('Не передан email');
+        }
+
+        if (empty($loginData['password'])) {
+            throw new InvalidArgumentException('Не передан password');
+        }
+
+        $user = User::findOneByColumn('email', $loginData['email']);
+        if ($user === null) {
+            throw new InvalidArgumentException('Проверьте правильность введенных данных');
+        }
+
+        if (!password_verify($loginData['password'], $user->getPasswordHash())) {
+            throw new InvalidArgumentException('Проверьте правильность введенных данных');
+        }
+
+        if (!$user->isConfirmed) {
+            throw new InvalidArgumentException('Пользователь не подтверждён');
+        }
+        return $user;
+    }
+
+    public function getPasswordHash(): string
+    {
+        return $this->passwordHash;
     }
 
     protected static function getTableName(): string
