@@ -99,7 +99,7 @@ class Database
     {
         $sth = $this->pdo->prepare($sql);
         $result = $sth->execute($params);
-
+        //$sth->debugDumpParams();
         if(false === $result)
         {
             return null;

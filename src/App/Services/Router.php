@@ -52,6 +52,8 @@ final class Router
             throw new NotFoundException();
         }
 
+        unset($matches[0]);
+
         static::beforeController();
 
         $controller = new $controllerName();
