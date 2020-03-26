@@ -3,6 +3,7 @@
 
 namespace App\Controllers;
 
+use App\Exceptions\AuthorizationException;
 use App\Exceptions\InvalidArgumentException;
 use App\Exceptions\NotFoundException;
 use App\Models\Users\User;
@@ -81,11 +82,20 @@ class UsersController extends AbstractController
             try {
                 $this->user = User::login($_POST);
                 UsersAuthorizationService::createToken($this->user);
+                header('Location: /', true, 303); //Пользователь уже авторизовался
+                exit;
             } catch (InvalidArgumentException $e) {
                 $this->view->renderHtml('users/login.php', ['error' => $e->getMessage()]);
                 return;
             }
         }
         $this->view->renderHtml('users/login.php');
+    }
+
+    public function exit()
+    {
+        UsersAuthorizationService::removeToken();
+        header('Location: /', true, 303); //Пользователь уже авторизовался
+        exit;
     }
 }

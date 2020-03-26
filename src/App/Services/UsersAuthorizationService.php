@@ -25,15 +25,19 @@ class UsersAuthorizationService
                 if ($ip_addr == $_SERVER['REMOTE_ADDR'])
                 {
                     $token = self::refreshToken($user_id, $ip_addr);
+                    break;
                 }
-                self::newSession($user->getId(), $_SERVER['REMOTE_ADDR']);
             }
-        }else{
-            $token = self::generateToken();
-            $db->query('INSERT INTO `'.self::TABLE_NAME.'`( `user_id`, `auth_token`, `ip_addr`) VALUES ()', [
-
-            ]);
         }
+        if(is_null($token))
+        {
+            $token = self::generateToken();
+        }
+        $db->query('INSERT INTO `'.self::TABLE_NAME.'`( `user_id`, `auth_token`, `ip_addr`) VALUES (:id, :token, :ip)', [
+            'id' => $user->getId(),
+            'token' => $token,
+            'ip' => $_SERVER['REMOTE_ADDR']
+        ]);
         self::setCookie($token);
     }
 
@@ -84,10 +88,9 @@ class UsersAuthorizationService
         );
 
         if ($result == null) {
-            self::removeToken($token);
+            self::removeToken();
             return null;
         }
-
         [ $id, $userId, $authToken, $ip_addr, $lastLogin] = array_values(get_object_vars($result[0]));
         $lastLogin = strtotime($lastLogin);
         $refreshTime = 60*60*24;
@@ -97,13 +100,13 @@ class UsersAuthorizationService
         {
             if (time()-$lastLogin > $expiresAt)
             {
-                self::removeToken($token);
+                self::removeToken();
             }else if (time()-$lastLogin > $refreshTime)
             {
                 self::setCookie(self::refreshToken($userId, $ip_addr));
             }
         }else{
-            self::removeToken($token);
+            self::removeToken();
             throw new AuthorizationException('Suspicious activity detected');
         }
 
@@ -117,17 +120,16 @@ class UsersAuthorizationService
 
     /**
      * Удаление токена у клиента и из БД
-     * @param string $token Токен
      *
      * @throws \App\Exceptions\DBException
      */
-    private static function removeToken(string $token)
+    public static function removeToken()
     {
-        unset($_COOKIE['token']);
+        setcookie ('token', false, time() - 3600, '/');
         $db = Database::getInstance();
         $db->query(
             'DELETE FROM `' . self::TABLE_NAME . '` WHERE `auth_token` = :token',
-            [ 'token' => $token ]
+            [ 'token' => $_COOKIE['token'] ]
         );
     }
 
