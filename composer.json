@@ -8,6 +8,6 @@
     "phpunit/phpunit": "^8.5"
   },
   "scripts": {
-    "test": "phpunit.bat -c phpunit.xml"
+    "test": "phpunit -c phpunit.xml"
   }
 }
